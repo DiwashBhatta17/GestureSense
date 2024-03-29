@@ -33,7 +33,7 @@ class HandDetector():
 
         return img
 
-    def findPosition(self, img, handId=0, draw=True):
+    def findPosition(self, img, handId=0, draw=False):
         lmList = []
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.hands.process(imgRGB)
@@ -45,9 +45,9 @@ class HandDetector():
                 # cx and cy is the center point multiply by wdth and height
                 cx, cy = int(lm.x * w), int(lm.y * h)
 
-                #print(id, cx, cy)
                 lmList.append([id,cx,cy])
-                cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
+                if draw:
+                    print(id, cx, cy)
 
         return lmList
         # Replace this with the calculated frames per second (fps) value
