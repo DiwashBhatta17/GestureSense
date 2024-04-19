@@ -54,6 +54,42 @@ class HandDetector():
 
         # Convert fps to string and place it on the image at position (10, 70)
 
+    def detectFingers(self, img, handId=0):
+        lmList = self.findPosition(img, handId, draw=False)
+        if len(lmList) != 0:
+            fingers = []
+
+            # Thumb
+            if lmList[4][1] > lmList[3][1]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            # Index finger
+            if lmList[8][2] < lmList[6][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            # Middle finger
+            if lmList[12][2] < lmList[10][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            # Ring finger
+            if lmList[16][2] < lmList[14][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            # Little finger
+            if lmList[20][2] < lmList[18][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            return fingers
 
 
 
