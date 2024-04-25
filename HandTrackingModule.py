@@ -1,3 +1,5 @@
+import math
+
 import cv2
 import mediapipe as mp
 import time
@@ -50,48 +52,41 @@ class HandDetector():
                     print(id, cx, cy)
 
         return lmList
-        # Replace this with the calculated frames per second (fps) value
 
-        # Convert fps to string and place it on the image at position (10, 70)
+    def find_distance(self, img, lmList, point1_id, point2_id):
+        x1, y1 = lmList[point1_id][1:]
+        x2, y2 = lmList[point2_id][1:]
+        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
+        # Draw line between points
+        cv2.line(img, (int(x1), int(y1)), (int(x2), int(y2)), (255, 0, 255), 3)
+
+        # Calculate midpoint
+        mx, my = (x1 + x2) // 2, (y1 + y2) // 2
+
+        # Draw small circle at midpoint
+        cv2.circle(img, (int(mx), int(my)), 5, (0, 255, 255), cv2.FILLED)
+
+        return distance
     def detectFingers(self, img, handId=0):
         lmList = self.findPosition(img, handId, draw=False)
         if len(lmList) != 0:
             fingers = []
 
-            # Thumb
+            # Thumb (check if x-coordinate of thumb tip is to the right of thumb base)
             if lmList[4][1] > lmList[3][1]:
                 fingers.append(1)
             else:
                 fingers.append(0)
 
-            # Index finger
-            if lmList[8][2] < lmList[6][2]:
-                fingers.append(1)
-            else:
-                fingers.append(0)
-
-            # Middle finger
-            if lmList[12][2] < lmList[10][2]:
-                fingers.append(1)
-            else:
-                fingers.append(0)
-
-            # Ring finger
-            if lmList[16][2] < lmList[14][2]:
-                fingers.append(1)
-            else:
-                fingers.append(0)
-
-            # Little finger
-            if lmList[20][2] < lmList[18][2]:
-                fingers.append(1)
-            else:
-                fingers.append(0)
+            # Other fingers (check if y-coordinate of finger tip is higher than finger base)
+            for finger_tip_id, finger_base_id in [(8, 6), (12, 10), (16, 14), (20, 18)]:
+                if lmList[finger_tip_id][2] < lmList[finger_base_id][2]:
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
 
             return fingers
-
-
 
 
 def main():
