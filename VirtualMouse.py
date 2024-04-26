@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import HandTrackingModule as htm
 import pyautogui
+from volumeControl import VolumeControl
 
 # variables here
 wCam, hCam = 640, 480
@@ -38,19 +39,41 @@ while True:
             pyautogui.moveTo(wScr - pos1, pos2, duration=0.1)
             cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
 
-        if fingers is not None and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0:
+        if fingers is not None and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0 and fingers[4] ==0:
             dist = detector.find_distance(img, lmList, 8,12)
-            print(dist)
             if dist < 30:
                 pyautogui.click()
                 print("Clicked")
 
-        if fingers is not None and fingers[1] == 1 and fingers[0] == 1 and fingers[2] == 0 and fingers[3] == 0 and fingers[4] == 0:
-            dist = detector.find_distance(img, lmList, 4,8)
-            print(f"Thumb to index finger distance: {dist}")
-            if dist <= 50:
-                print("Right clicked")
-                pyautogui.rightClick()
+        if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0:
+            print("Volume")
+            volume = VolumeControl()
+            img = volume.run(img, lmList)
+
+        if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 1:
+            dist = detector.find_distance(img, lmList, 4,20)
+            if dist < 40:
+                pyautogui.hotkey('alt', 'tab')
+                print("next")
+
+        if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 0:
+            print("tab")
+            dist = detector.find_distance(img, lmList, 4,16)
+            print(dist)
+            if dist < 40:
+                pyautogui.hotkey('ctrl', 'tab')
+                print("next")
+
+
+        if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 0 and fingers[3] == 0 and fingers[4] == 0:
+            pyautogui.scroll(-1)
+
+        if fingers is not None and fingers[0] == 0 and fingers[1] == 0 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1:
+            pyautogui.scroll(1)
+
+
+
+
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
