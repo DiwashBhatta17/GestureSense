@@ -3,6 +3,7 @@ import numpy as np
 import HandTrackingModule as htm
 import pyautogui
 from volumeControl import VolumeControl
+import time
 
 # variables here
 wCam, hCam = 640, 480
@@ -51,9 +52,11 @@ while True:
             img = volume.run(img, lmList)
 
         if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 1:
-            dist = detector.find_distance(img, lmList, 4,20)
-            if dist < 40:
+            dist = detector.find_distance(img, lmList, 4,17)
+            print(dist)
+            if dist < 58:
                 pyautogui.hotkey('alt', 'tab')
+                time.sleep(0.5)
                 print("next")
 
         if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 0:
@@ -64,16 +67,17 @@ while True:
                 pyautogui.hotkey('ctrl', 'tab')
                 print("next")
 
+        if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and \
+                fingers[4] == 1:
+            dist = detector.find_distance(img, lmList, 4,5)
+            print(dist)
+            if dist <= 57:
+                pyautogui.scroll(60)
 
-        if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 0 and fingers[3] == 0 and fingers[4] == 0:
-            pyautogui.scroll(-1)
-
-        if fingers is not None and fingers[0] == 0 and fingers[1] == 0 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1:
-            pyautogui.scroll(1)
-
-
-
-
+        if fingers is not None and fingers[0] == 0 and fingers[1] == 0 and fingers[2] == 0 and fingers[3] == 0 and \
+                fingers[4] == 0:
+            print("Scroll down")
+            pyautogui.scroll(-60)  # Adjust duration as needed for desired speed
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
