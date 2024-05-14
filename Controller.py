@@ -25,5 +25,4 @@ class VolumeControl:
 
             cv2.putText(img, f'Dist: {int(distance)}, Vol: {int(volume_level)}', (10, 50), cv2.FONT_HERSHEY_PLAIN, 2,
                         (255, 0, 0), 2)
-
         return img

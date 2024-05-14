@@ -44,6 +44,8 @@ while True:
             dist = detector.find_distance(img, lmList, 8,12)
             if dist < 30:
                 pyautogui.click()
+                time.sleep(1)
+
                 print("Clicked")
 
         if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0:
@@ -56,7 +58,7 @@ while True:
             print(dist)
             if dist < 58:
                 pyautogui.hotkey('alt', 'tab')
-                time.sleep(0.5)
+                time.sleep(1)
                 print("next")
 
         if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 0:
