@@ -1,12 +1,8 @@
-import webbrowser
-
 import pygame
 import random
 import asyncio
 import edge_tts
-from Brain import ChatBotIntegration
 import os
-import SpeechRecognition as sr
 
 allow = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 :,.?!"
 
@@ -33,7 +29,7 @@ async def amain(text) -> None:
     await communicate.save(r'Backend\data.mp3')
 
 
-def say(Text):
+def TextToSpeech(Text):
     def Speak(*args, fn=fnsample, **kwargs):
         r = [str(i) for i in args]
         data = " ".join(r)
@@ -83,34 +79,6 @@ def say(Text):
         Speak(Text)
 
 
-def takeCommands():
-    try:
-        query = sr.SpeechRecognition()
-        print(f"User said: {query}")
-        return query
-
-    except Exception as e:
-        return "Sorry Some error occured sir."
-
-
-if __name__ == "__main__":
-    say(
-        "Hello sir, I am GEMMA, a Gesture-Enabled Machine with Multifunctional Abilities. Iam here to help you to "
-        "easily operate and automate your PC easily with me.")
-
-    while True:
-        print("Listening ...")
-        answer = takeCommands().lower()
-
-        chat = ChatBotIntegration.ask_ai(answer)
-        say(chat)
-
-        sites = [["youtube", "https://www.youtube.com"], ["google", "https://www.google.com"],
-                 ["wikipedia", "https://www.wikipedia.com"]]
-        for site in sites:
-            if f"Open {site[0]}".lower() in answer.lower():
-                say(f"Opening {site[0]} sir.")
-                webbrowser.open(site[1])
-
-        if "are you there" in answer:
-            say("At your sevice sir.")
+TextToSpeech(
+    "I Am FRIDAY, a Female Replacement Intelligent Digital Assistant Youth, a confident and positive AI voice, design by Dewas")
+TextToSpeech("Saala khaadush bole tujhe to kya huwa oho hohoho hooh ohohoh oho")
