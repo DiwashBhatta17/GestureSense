@@ -40,7 +40,7 @@ while True:
             pyautogui.moveTo(wScr - pos1, pos2, duration=0.1)
             cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
 
-        if fingers is not None and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0 and fingers[4] ==0:
+        if fingers is not None and fingers[0]== 0 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0 and fingers[4] ==0:
             dist = detector.find_distance(img, lmList, 8,12)
             if dist < 30:
                 pyautogui.click()
@@ -48,11 +48,21 @@ while True:
 
                 print("Clicked")
 
+
+
+        if fingers is not None and fingers[0]== 1 and fingers[1] == 1 and fingers[2] == 0 and fingers[3] == 0 and fingers[4] ==0:
+            dist = detector.find_distance(img, lmList, 4,5)
+            if dist < 30:
+                pyautogui.rightClick()
+                time.sleep(1)
+
+                print("right Clicked")
+        # vloume
         if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0:
             print("Volume")
             volume = VolumeControl()
             img = volume.run(img, lmList)
-
+        # alt tab
         if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 1:
             dist = detector.find_distance(img, lmList, 4,17)
             print(dist)
@@ -60,7 +70,7 @@ while True:
                 pyautogui.hotkey('alt', 'tab')
                 time.sleep(1)
                 print("next")
-
+        # ctrl tab
         if fingers is not None and fingers[0] == 0 and fingers[4] == 1 and fingers[3] == 0:
             print("tab")
             dist = detector.find_distance(img, lmList, 4,16)
@@ -68,14 +78,14 @@ while True:
             if dist < 40:
                 pyautogui.hotkey('ctrl', 'tab')
                 print("next")
-
+        # Scroll up
         if fingers is not None and fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1 and \
                 fingers[4] == 1:
             dist = detector.find_distance(img, lmList, 4,5)
             print(dist)
             if dist <= 57:
                 pyautogui.scroll(60)
-
+        # function to scroll down
         if fingers is not None and fingers[0] == 0 and fingers[1] == 0 and fingers[2] == 0 and fingers[3] == 0 and \
                 fingers[4] == 0:
             print("Scroll down")

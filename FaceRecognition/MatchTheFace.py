@@ -3,7 +3,7 @@ import face_recognition
 import pickle
 
 def recognize_faces():
-    with open('face_encodings.dat', 'rb') as file:
+    with open('FaceRecognition/face_encodings.dat', 'rb') as file:
         known_faces = pickle.load(file)
 
     video_capture = cv2.VideoCapture(0)
@@ -17,6 +17,9 @@ def recognize_faces():
             matches = face_recognition.compare_faces(known_faces, face_encoding)
             if True in matches:
                 print("Face recognized!")
+                return "yes"
+
+                break
 
         cv2.imshow('Video', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):

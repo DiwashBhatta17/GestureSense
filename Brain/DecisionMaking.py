@@ -25,8 +25,20 @@ which select 2 options give below:
 ***The output should be only one word***
 Example (1) : hello can you open chrome for me?
 Example Output (1) : Automation
-Example (2) : who is akshay kumar?
-Example Output (2) : Query
+Example (2) : Search Akshya kumar on Wikipedia?
+Example Output (2) : Automation
+Example (3) : who is akshay kumar?
+Example Output (3) : Query
+Example (4) : play music on youtube?
+Example Output (4) : Automation
+Example (5) : well, play music on youtube?
+Example Output (5) : Automation
+Example (6) : No, i think he is human being.
+Example Output (6) : Query
+Example (7) : i mean to say can you open chrome?
+Example Output (7) : Automation
+Example (8) : okay tell me a joke+
+Example Output (8) : Query
 """
 
 template_L1 = """#reply only one of them ["Automation", "Query"]

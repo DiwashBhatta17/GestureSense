@@ -25,7 +25,7 @@ convo = model.start_chat(history=[ ])
 
 def ask_ai(question):
      try:
-         convo.send_message(question) 
+         convo.send_message(f"{question} ,always answer in short and sweet")
          return convo.last.text 
      except Exception as e: 
         print(f"An error occurred while communicating with the AI: {e}") 

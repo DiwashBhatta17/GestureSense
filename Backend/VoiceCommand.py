@@ -4,9 +4,10 @@ import pygame
 import random
 import asyncio
 import edge_tts
-from Brain import ChatBotIntegration
+from Brain import ChatBotIntegration, DecisionMaking
 import os
-import SpeechRecognition as sr
+from Backend import Automations
+from Backend import SpeechRecognition as sr
 
 allow = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 :,.?!"
 
@@ -93,24 +94,28 @@ def takeCommands():
         return "Sorry Some error occured sir."
 
 
-if __name__ == "__main__":
+def main():
     say(
         "Hello sir, I am GEMMA, a Gesture-Enabled Machine with Multifunctional Abilities. Iam here to help you to "
         "easily operate and automate your PC easily with me.")
+
 
     while True:
         print("Listening ...")
         answer = takeCommands().lower()
 
-        chat = ChatBotIntegration.ask_ai(answer)
-        say(chat)
 
-        sites = [["youtube", "https://www.youtube.com"], ["google", "https://www.google.com"],
-                 ["wikipedia", "https://www.wikipedia.com"]]
-        for site in sites:
-            if f"Open {site[0]}".lower() in answer.lower():
-                say(f"Opening {site[0]} sir.")
-                webbrowser.open(site[1])
+        decision = DecisionMaking.L1(answer)
 
-        if "are you there" in answer:
-            say("At your sevice sir.")
+        if decision != "Automation":
+            chat = ChatBotIntegration.ask_ai(answer)
+            say(chat)
+
+        else:
+            chat = Automations.execute_automation(answer)
+            say(chat)
+
+
+if __name__ == "__main__":
+    main()
+
